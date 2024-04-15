@@ -1,5 +1,5 @@
-// userController.js
 const User = require('../models/userModel');
+const { authenticateUser } = require('../middlewares/authMiddleware');
 
 exports.register = async (req, res) => {
   try {
@@ -21,12 +21,13 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.getProfile = async (req, res) => {
+// Define getProfile endpoint with authentication middleware
+exports.getProfile = [authenticateUser, async (req, res) => {
   try {
-    const userId = req.user.userId; // Assuming userId is extracted from the 0token in middleware
+    const userId = req.user.userId; // Assuming userId is extracted from the token in middleware
     const userProfile = await User.getProfile(userId);
     res.json(userProfile);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
-};
+}];

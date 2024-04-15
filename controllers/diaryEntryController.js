@@ -1,7 +1,7 @@
-// diaryEntryController.js
 const DiaryEntry = require('../models/diaryEntryModel');
+const { authenticateUser } = require('../middlewares/authMiddleware');
 
-exports.createEntry = async (req, res) => {
+exports.createEntry = [authenticateUser, async (req, res) => {
   try {
     const entryData = req.body;
     const result = await DiaryEntry.createEntry(entryData);
@@ -9,9 +9,9 @@ exports.createEntry = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+}];
 
-exports.getEntry = async (req, res) => {
+exports.getEntry = [authenticateUser, async (req, res) => {
   try {
     const entryId = req.params.id;
     const entry = await DiaryEntry.getEntry(entryId);
@@ -19,9 +19,9 @@ exports.getEntry = async (req, res) => {
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
-};
+}];
 
-exports.updateEntry = async (req, res) => {
+exports.updateEntry = [authenticateUser, async (req, res) => {
   try {
     const entryId = req.params.id;
     const updatedData = req.body;
@@ -30,9 +30,9 @@ exports.updateEntry = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+}];
 
-exports.deleteEntry = async (req, res) => {
+exports.deleteEntry = [authenticateUser, async (req, res) => {
   try {
     const entryId = req.params.id;
     const result = await DiaryEntry.deleteEntry(entryId);
@@ -40,4 +40,4 @@ exports.deleteEntry = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+}];

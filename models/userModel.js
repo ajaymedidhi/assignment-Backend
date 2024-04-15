@@ -53,7 +53,7 @@ class User {
 
   static async getProfile(userId) {
     try {
-      const user = await UserModel.findById(userId);
+      const user = await UserSchema.findById(userId);
       if (!user) {
         throw new Error('User not found');
       }
@@ -72,6 +72,8 @@ class User {
       throw new Error(error.message);
     }
   }
+
+  
 }
 
 module.exports = User;

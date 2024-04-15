@@ -4,6 +4,7 @@ const dbConfig = require('./config/dbConfig');
 const userRoutes = require('./routes/userRoutes');
 const diaryEntryRoutes = require('./routes/diaryEntryRoutes');
 
+
 const app = express();
 dbConfig.connect(); // Connect to the database
 
@@ -15,3 +16,4 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
